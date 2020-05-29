@@ -1,10 +1,24 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:neon_mode/config/colors.dart';
 
 class FlickerCircle extends StatefulWidget {
   final Color color;
-  const FlickerCircle({Key key, this.color}) : super(key: key);
+  final double radius;
+  final bool shouldFlicker;
+  final int shadowSpread;
+  final double strokeWidth;
+  final int spreadValue;
+  final Widget child;
+  const FlickerCircle(
+      {Key key,
+      this.color,
+      this.radius,
+      this.shouldFlicker,
+      this.shadowSpread,
+      this.strokeWidth,
+      this.spreadValue,
+      this.child})
+      : super(key: key);
   @override
   _FlickerCircleState createState() => _FlickerCircleState();
 }
@@ -43,19 +57,34 @@ class _FlickerCircleState extends State<FlickerCircle>
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: FadeTransition(
-        opacity: _fadeInFadeOut,
-        child: Container(
-          child: CustomPaint(
-            painter: ShapePainter(
-                color: widget.color,
-                radius: 100.0,
-                shadowSpread: 7,
-                strokeWidth: 4),
-            child: Container(),
-          ),
-        ),
-      ),
+      child: widget.shouldFlicker
+          ? FadeTransition(
+              opacity: _fadeInFadeOut,
+              child: Container(
+                child: CustomPaint(
+                  painter: ShapePainter(
+                    color: widget.color,
+                    radius: widget.radius,
+                    shadowSpread: widget.shadowSpread,
+                    strokeWidth: widget.strokeWidth,
+                    spreadValue: widget.spreadValue,
+                  ),
+                  child: widget.child == null ? Container() : widget.child,
+                ),
+              ),
+            )
+          : Container(
+              child: CustomPaint(
+                painter: ShapePainter(
+                  color: widget.color,
+                  radius: widget.radius,
+                  shadowSpread: widget.shadowSpread,
+                  strokeWidth: widget.strokeWidth,
+                  spreadValue: widget.spreadValue,
+                ),
+                child: widget.child == null ? Container() : widget.child,
+              ),
+            ),
     );
   }
 }
@@ -65,7 +94,13 @@ class ShapePainter extends CustomPainter {
   final double radius;
   final int shadowSpread;
   final double strokeWidth;
-  ShapePainter({this.strokeWidth, this.radius, this.color, this.shadowSpread});
+  final int spreadValue;
+  ShapePainter(
+      {this.strokeWidth,
+      this.radius,
+      this.color,
+      this.shadowSpread,
+      this.spreadValue});
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint()
@@ -80,7 +115,7 @@ class ShapePainter extends CustomPainter {
         ..strokeWidth = strokeWidth
         ..style = PaintingStyle.stroke
         ..maskFilter = MaskFilter.blur(
-            BlurStyle.outer, convertRadiusToSigma((i * 10).toDouble()))
+            BlurStyle.outer, convertRadiusToSigma((i * spreadValue).toDouble()))
         ..strokeCap = StrokeCap.round;
       shadows.add(shadow);
     }

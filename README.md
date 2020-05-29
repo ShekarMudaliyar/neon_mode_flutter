@@ -1,6 +1,32 @@
 # neon_mode
 
-A new Flutter project.
+Neon mode in Flutter. Added glow with flicker to widgets.
+
+# Here's few demo!
+
+## Single Flicker Text
+
+![single text flicker](demos/singleflickertext.gif)
+
+![single text flicker](demos/neontext.png)
+
+## Line Tube Flicker
+
+![line tube flicker](demos/linetubeflicker.gif)
+
+![line tube flicker](demos/linetube.png)
+
+## Circle Tube Flicker
+
+![circle tube flicker](demos/circletubeflicker.gif)
+
+![circle tube flicker](demos/circletube.png)
+
+## Text Circle Tube Flicker
+
+![text circle tube flicker](demos/circletextflicker.gif)
+
+![text circle tube flicker](demos/circletubetext.png)
 
 ## Getting Started
 

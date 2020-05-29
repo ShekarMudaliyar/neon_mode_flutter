@@ -1,17 +1,15 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 
-class FlickerText extends StatefulWidget {
+class SingleFlickerText extends StatefulWidget {
   final Color color;
-  final String text;
-  final bool shouldFlicker;
-  const FlickerText({Key key, this.color, this.text, this.shouldFlicker})
-      : super(key: key);
+
+  const SingleFlickerText({Key key, this.color}) : super(key: key);
   @override
-  _FlickerTextState createState() => _FlickerTextState();
+  _SingleFlickerTextState createState() => _SingleFlickerTextState();
 }
 
-class _FlickerTextState extends State<FlickerText>
+class _SingleFlickerTextState extends State<SingleFlickerText>
     with TickerProviderStateMixin {
   AnimationController animation;
   Animation<double> _fadeInFadeOut;
@@ -81,26 +79,34 @@ class _FlickerTextState extends State<FlickerText>
       color: Colors.white,
       fontFamily: "NeonLights",
     );
-    return widget.shouldFlicker
-        ? FadeTransition(
-            opacity: _fadeInFadeOut,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Text(widget.text,
-                    textAlign: TextAlign.center, style: strokeStyle),
-                Text(widget.text,
-                    textAlign: TextAlign.center, style: glowStyle),
-              ],
-            ),
-          )
-        : Stack(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            Text("Hello Wo", textAlign: TextAlign.center, style: strokeStyle),
+            Text("Hello Wo", textAlign: TextAlign.center, style: glowStyle),
+          ],
+        ),
+        FadeTransition(
+          opacity: _fadeInFadeOut,
+          child: Stack(
             alignment: Alignment.center,
             children: [
-              Text(widget.text,
-                  textAlign: TextAlign.center, style: strokeStyle),
-              Text(widget.text, textAlign: TextAlign.center, style: glowStyle),
+              Text("r", textAlign: TextAlign.center, style: strokeStyle),
+              Text("r", textAlign: TextAlign.center, style: glowStyle),
             ],
-          );
+          ),
+        ),
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            Text("ld!", textAlign: TextAlign.center, style: strokeStyle),
+            Text("ld!", textAlign: TextAlign.center, style: glowStyle),
+          ],
+        ),
+      ],
+    );
   }
 }
